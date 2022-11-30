@@ -9,11 +9,14 @@ export default {
   data() {
     return {
       store,
+      styleObject: {
+        color: "red",
+      },
     };
   },
   methods: {
     ratingTransform(num) {
-      return Math.ceil((num * 5) / 10);
+      return Math.ceil((Number(num) * 5) / 10);
     },
   },
 };
@@ -32,7 +35,16 @@ export default {
             <h2>{{ movie.title }}</h2>
             <h3>{{ movie.original_title }}</h3>
             <div>{{ movie.original_language }}</div>
-            <div>{{ ratingTransform(movie.vote_average) }}</div>
+            <div class="rating">
+              <i
+                class="fa-solid fa-star rated"
+                v-for="n in ratingTransform(movie.vote_average)"
+              ></i>
+              <i
+                class="fa-solid fa-star"
+                v-for="n in 5 - ratingTransform(movie.vote_average)"
+              ></i>
+            </div>
           </div>
         </a>
       </li>
@@ -43,5 +55,11 @@ export default {
 <style lang="scss" scoped>
 img {
   height: 23.75rem;
+}
+.rating {
+  display: flex;
+  .rated {
+    color: rgb(192, 192, 69);
+  }
 }
 </style>

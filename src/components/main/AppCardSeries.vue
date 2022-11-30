@@ -32,7 +32,16 @@ export default {
             <h2>{{ serie.name }}</h2>
             <h3>{{ serie.original_name }}</h3>
             <div>{{ serie.original_language }}</div>
-            <div>{{ ratingTransform(serie.vote_average) }}</div>
+            <div class="rating">
+              <i
+                class="fa-solid fa-star rated"
+                v-for="n in ratingTransform(serie.vote_average)"
+              ></i>
+              <i
+                class="fa-solid fa-star"
+                v-for="n in 5 - ratingTransform(serie.vote_average)"
+              ></i>
+            </div>
           </div>
         </a>
       </li>
@@ -43,5 +52,11 @@ export default {
 <style lang="scss" scoped>
 img {
   height: 23.75rem;
+}
+.rating {
+  display: flex;
+}
+.rated {
+  color: rgb(192, 192, 69);
 }
 </style>
