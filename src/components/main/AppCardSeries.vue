@@ -11,6 +11,11 @@ export default {
       store,
     };
   },
+  methods: {
+    ratingTransform(num) {
+      return Math.ceil((Number(num) * 5) / 10);
+    },
+  },
 };
 </script>
 
@@ -27,7 +32,7 @@ export default {
             <h2>{{ serie.name }}</h2>
             <h3>{{ serie.original_name }}</h3>
             <div>{{ serie.original_language }}</div>
-            <div>{{ serie.vote_average }}</div>
+            <div>{{ ratingTransform(serie.vote_average) }}</div>
           </div>
         </a>
       </li>
