@@ -20,9 +20,7 @@ export default {
 <template>
   <section class="container">
     <AppCardMovies class="card" v-for="movie in store.movies" :movie="movie" />
-  </section>
-  <section>
-    <AppCardSeries />
+    <AppCardSeries class="card" v-for="serie in store.series" :serie="serie" />
   </section>
 </template>
 
@@ -30,9 +28,15 @@ export default {
 .container {
   display: flex;
   flex-wrap: wrap;
-  .card {
-    width: calc(100% / 4 - 1.25rem);
-    margin: 0 0.625rem;
+}
+.card {
+  width: calc(100% / 4 - 1.25rem);
+  margin: 0 0.625rem;
+  @include media-breackpoint-up(md) {
+    width: calc(100% / 3 - 1.25rem);
+  }
+  @include media-breackpoint-up(sm) {
+    width: calc(100% / 2 - 1.25rem);
   }
 }
 </style>
