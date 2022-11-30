@@ -1,18 +1,24 @@
 <script>
-import PageTitle from './components/PageTitle.vue';
+import AppHeader from "./components/header/AppHeader.vue";
 
 export default {
   components: {
-    PageTitle
-  }
-}
+    AppHeader,
+  },
+  methods: {
+    moviesSearch() {
+      console.log("prova");
+    },
+  },
+};
 </script>
 
 <template>
-  <div>
-    <PageTitle/>
-  </div>
+  <header>
+    <AppHeader @search="moviesSearch" />
+  </header>
 </template>
 
-<style scoped>
+<style lang="scss">
+@import "./style/global.scss";
 </style>
