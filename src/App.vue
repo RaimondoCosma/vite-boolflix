@@ -1,13 +1,32 @@
 <script>
+import { store } from "./store";
+import axios from "axios";
 import AppHeader from "./components/header/AppHeader.vue";
+import AppMain from "./components/main/AppMain.vue";
 
 export default {
   components: {
     AppHeader,
+    AppMain,
+  },
+  data() {
+    return {
+      store,
+    };
   },
   methods: {
     moviesSearch() {
-      console.log("prova");
+      axios
+        .get("https://api.themoviedb.org/3/search/movie", {
+          params: {
+            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+            query: store.inputText,
+            language: "it-IT",
+          },
+        })
+        .then((resp) => {
+          this.store.movies = resp.data.results;
+        });
     },
   },
 };
@@ -17,6 +36,9 @@ export default {
   <header>
     <AppHeader @search="moviesSearch" />
   </header>
+  <main>
+    <AppMain />
+  </main>
 </template>
 
 <style lang="scss">

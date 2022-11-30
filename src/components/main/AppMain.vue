@@ -18,7 +18,12 @@ export default {
 </script>
 
 <template>
-  <div></div>
+  <section>
+    <AppCardMovies />
+  </section>
+  <section>
+    <AppCardSeries />
+  </section>
 </template>
 
 <style lang="scss" scoped></style>
