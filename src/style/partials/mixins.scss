@@ -1,0 +1,48 @@
+/* --------------------
+    MIXINS MEDIA QUERIES
+-------------------- */
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+@mixin media-breackpoint-up($size) {
+  $value: map-get($breakpoints, $size);
+  @media screen and (max-width: $value) {
+    @content;
+  }
+}
+/* --------------------
+    MIXINS PROVA II
+-------------------- */
+@mixin for-size($size) {
+  @if $size == phone-only {
+    @media (max-width: 576px) {
+      @content;
+    }
+  }
+  @if $size == tablet-portrait-up {
+    @media (mix-width: 768px) {
+      @content;
+    }
+  }
+  @if $size == tablet-landscape-up {
+    @media (mix-width: 992px) {
+      @content;
+    }
+  }
+  @if $size == desktop-up {
+    @media (mix-width: 1200px) {
+      @content;
+    }
+  }
+  @if $size == big-desktop-up {
+    @media (mix-width: 1400px) {
+      @content;
+    }
+  }
+}
