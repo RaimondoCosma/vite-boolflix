@@ -18,12 +18,21 @@ export default {
 </script>
 
 <template>
-  <section>
-    <AppCardMovies v-for="movie in store.movies" :movie="movie" />
+  <section class="container">
+    <AppCardMovies class="card" v-for="movie in store.movies" :movie="movie" />
   </section>
   <section>
     <AppCardSeries />
   </section>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  .card {
+    width: calc(100% / 4 - 1.25rem);
+    margin: 0 0.625rem;
+  }
+}
+</style>
