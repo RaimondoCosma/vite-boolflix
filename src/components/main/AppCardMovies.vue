@@ -3,6 +3,9 @@ import { store } from "../../store";
 
 export default {
   name: "AppCardMovies",
+  props: {
+    movie: Object,
+  },
   data() {
     return {
       store,
@@ -14,7 +17,7 @@ export default {
 <template>
   <div>
     <ul>
-      <li v-for="movie in store.movies">
+      <li>
         <h2>{{ movie.title }}</h2>
         <h3>{{ movie.original_title }}</h3>
         <div>{{ movie.original_language }}</div>

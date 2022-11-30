@@ -19,7 +19,7 @@ export default {
 
 <template>
   <section>
-    <AppCardMovies />
+    <AppCardMovies v-for="movie in store.movies" :movie="movie" />
   </section>
   <section>
     <AppCardSeries />
