@@ -1,8 +1,12 @@
 <script>
 import { store } from "../../store";
+import CountryFlag from "vue-country-flag-next";
 
 export default {
   name: "AppCardSeries",
+  components: {
+    CountryFlag,
+  },
   props: {
     serie: Object,
   },
@@ -31,7 +35,7 @@ export default {
             />
             <h2>{{ serie.name }}</h2>
             <h3>{{ serie.original_name }}</h3>
-            <div>{{ serie.original_language }}</div>
+            <country-flag :country="serie.original_language" size="small" />
             <div class="rating">
               <i
                 class="fa-solid fa-star rated"
