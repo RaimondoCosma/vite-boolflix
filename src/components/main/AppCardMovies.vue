@@ -29,6 +29,10 @@ export default {
         return "jp";
       } else if (string === "ko") {
         return "kr";
+      } else if (string === "he") {
+        return "il";
+      } else if (string === "hi") {
+        return "in";
       } else {
         return string;
       }
@@ -50,9 +54,9 @@ export default {
             <h2>{{ movie.title }}</h2>
             <h3>{{ movie.original_title }}</h3>
             <country-flag
+              class="ms-flag"
               :country="changeLanguage(movie.original_language)"
-              size="medium"
-              shadow="true"
+              size="normal"
             />
             <div class="rating">
               <i
@@ -80,5 +84,8 @@ img {
   .rated {
     color: rgb(192, 192, 69);
   }
+}
+.ms-flag {
+  box-shadow: 3px 3px 5px 0px #000000;
 }
 </style>
