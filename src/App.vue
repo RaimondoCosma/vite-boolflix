@@ -2,11 +2,13 @@
 import { store } from "./store";
 import axios from "axios";
 import AppHeader from "./components/header/AppHeader.vue";
+import AppError from "./components/error/AppError.vue";
 import AppMain from "./components/main/AppMain.vue";
 
 export default {
   components: {
     AppHeader,
+    AppError,
     AppMain,
   },
   data() {
@@ -26,6 +28,12 @@ export default {
         })
         .then((resp) => {
           this.store.movies = resp.data.results;
+          if (this.errorOccurred) {
+            this.errorOccurred = !this.errorOccurred;
+          }
+        })
+        .catch((err) => {
+          this.errorOccurred = true;
         });
       axios
         .get("https://api.themoviedb.org/3/search/tv", {
@@ -37,6 +45,12 @@ export default {
         })
         .then((resp) => {
           this.store.series = resp.data.results;
+          if (this.errorOccurred) {
+            this.errorOccurred = !this.errorOccurred;
+          }
+        })
+        .catch((err) => {
+          this.errorOccurred = true;
         });
     },
   },
@@ -46,6 +60,7 @@ export default {
 <template>
   <header>
     <AppHeader @search="moviesSearch" />
+    <AppError v-if="errorOccurred" />
   </header>
   <main>
     <AppMain />
