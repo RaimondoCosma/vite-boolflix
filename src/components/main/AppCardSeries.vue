@@ -19,6 +19,17 @@ export default {
     ratingTransform(num) {
       return Math.ceil((Number(num) * 5) / 10);
     },
+    changeLanguage(string) {
+      if (string === "en") {
+        return "gb";
+      } else if (string === "ja") {
+        return "jp";
+      } else if (string === "ko") {
+        return "kr";
+      } else {
+        return string;
+      }
+    },
   },
 };
 </script>
@@ -35,7 +46,11 @@ export default {
             />
             <h2>{{ serie.name }}</h2>
             <h3>{{ serie.original_name }}</h3>
-            <country-flag :country="serie.original_language" size="small" />
+            <country-flag
+              :country="changeLanguage(serie.original_language)"
+              size="medium"
+              shadow="true"
+            />
             <div class="rating">
               <i
                 class="fa-solid fa-star rated"

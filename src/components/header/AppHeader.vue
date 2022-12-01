@@ -13,9 +13,9 @@ export default {
 
 <template>
   <div>
-    <form action="">
+    <form @submit.prevent="$emit('search')">
       <input type="text" name="search" v-model="store.inputText" />
-      <button type="submit" @click.prevent="$emit('search')">Cerca</button>
+      <button type="submit">Cerca</button>
     </form>
   </div>
 </template>

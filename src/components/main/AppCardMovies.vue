@@ -22,6 +22,17 @@ export default {
     ratingTransform(num) {
       return Math.ceil((Number(num) * 5) / 10);
     },
+    changeLanguage(string) {
+      if (string === "en") {
+        return "gb";
+      } else if (string === "ja") {
+        return "jp";
+      } else if (string === "ko") {
+        return "kr";
+      } else {
+        return string;
+      }
+    },
   },
 };
 </script>
@@ -34,11 +45,15 @@ export default {
           <div>
             <img
               :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`"
-              alt="movie.title"
+              :alt="movie.title"
             />
             <h2>{{ movie.title }}</h2>
             <h3>{{ movie.original_title }}</h3>
-            <country-flag :country="movie.original_language" size="small" />
+            <country-flag
+              :country="changeLanguage(movie.original_language)"
+              size="medium"
+              shadow="true"
+            />
             <div class="rating">
               <i
                 class="fa-solid fa-star rated"
