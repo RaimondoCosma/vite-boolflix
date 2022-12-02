@@ -1,12 +1,14 @@
 <script>
 import { store } from "./store";
 import axios from "axios";
+import AppWelcome from "./components/commons/AppWelcome.vue";
 import AppHeader from "./components/header/AppHeader.vue";
 import AppError from "./components/commons/AppError.vue";
 import AppMain from "./components/main/AppMain.vue";
 
 export default {
   components: {
+    AppWelcome,
     AppHeader,
     AppError,
     AppMain,
@@ -81,26 +83,15 @@ export default {
           }
         });
     },
-    getActors() {
-      axios
-        .get("https://api.themoviedb.org/3/movie/67/credits", {
-          params: {
-            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
-          },
-        })
-        .then((resp) => {
-          console.log(resp);
-        });
-    },
   },
   created() {
     this.topRatedShows();
-    this.getActors;
   },
 };
 </script>
 
 <template>
+  <AppWelcome />
   <header>
     <AppHeader @search="moviesSearch" :method="topRatedShows" />
   </header>

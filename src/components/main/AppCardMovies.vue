@@ -1,5 +1,6 @@
 <script>
 import { store } from "../../store";
+import axios from "axios";
 import CountryFlag from "vue-country-flag-next";
 
 export default {
@@ -40,6 +41,19 @@ export default {
     showInfo() {
       this.store.cardIndex = this.index;
       this.store.showDetails = !this.store.showDetails;
+      this.getActors();
+    },
+    getActors() {
+      axios
+        .get("`https://api.themoviedb.org/3/movie/${movies[1].id}/credits`", {
+          params: {
+            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+          },
+        })
+        .then((resp) => {
+          this.store.actors = resp;
+          console.log(resp);
+        });
     },
   },
 };
@@ -115,25 +129,21 @@ export default {
     top: -90%;
   }
   .card-details {
-    background: linear-gradient(
+    background-image: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0)
+      rgba(0, 0, 0, 0.616),
+      rgba(0, 0, 0, 0.257)
     );
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    color: rgb(1, 0, 51);
+    color: rgb(255, 255, 255);
     position: absolute;
-    top: -100%;
+    top: -105%;
     left: 0;
     right: 0;
     height: 100%;
     border-radius: 0 0 100px 100px;
     transition: top 0.3s linear, border-radius 0.3s linear;
-    // &:hover {
-    //   top: 0;
-    //   border-radius: 0 0 0 0;
-    // }
     .fa-circle-chevron-down {
       position: absolute;
       color: white;
@@ -159,7 +169,7 @@ img {
   }
 }
 .description-text {
-  max-height: 9.375rem;
+  max-height: 6.25rem;
   overflow-y: auto;
   padding: 0.3125rem;
 }

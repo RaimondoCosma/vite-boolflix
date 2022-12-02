@@ -62,7 +62,7 @@ export default {
                   this.store.showDetailsSeries &&
                   index === this.store.cardIndex,
               }"
-              @click="showInfo()"
+              @click.prevent="showInfo()"
             >
               <h2>{{ serie.name }}</h2>
               <h3>Titolo originale: {{ serie.original_name }}</h3>
@@ -119,16 +119,16 @@ export default {
     text-align: center;
   }
   .card-details {
-    background: linear-gradient(
+    background-image: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0)
+      rgba(0, 0, 0, 0.616),
+      rgba(0, 0, 0, 0.257)
     );
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    color: rgb(1, 0, 51);
+    color: rgb(255, 255, 255);
     position: absolute;
-    top: -100%;
+    top: -105%;
     left: 0;
     right: 0;
     height: 100%;
@@ -160,7 +160,7 @@ img {
   color: rgb(192, 192, 69);
 }
 .description-text {
-  max-height: 9.375rem;
+  max-height: 6.25rem;
   overflow-y: auto;
   padding: 0.3125rem;
 }
