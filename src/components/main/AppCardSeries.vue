@@ -9,6 +9,7 @@ export default {
   },
   props: {
     serie: Object,
+    index: Number,
   },
   data() {
     return {
@@ -37,7 +38,8 @@ export default {
       }
     },
     showInfo() {
-      this.store.showDetails = !this.store.showDetails;
+      this.store.cardIndex = this.index;
+      this.store.showDetailsSeries = !this.store.showDetailsSeries;
     },
   },
 };
@@ -55,9 +57,14 @@ export default {
             />
             <div
               class="card-details"
-              :class="{ active: this.store.showDetails }"
+              :class="{
+                active:
+                  this.store.showDetailsSeries &&
+                  index === this.store.cardIndex,
+              }"
+              @click="showInfo()"
             >
-              <h2>{{ serie.name }}</h2>
+              <h3>{{ serie.name }}</h3>
               <h3>{{ serie.original_name }}</h3>
               <country-flag
                 class="ms-flag"
@@ -75,8 +82,11 @@ export default {
                 ></i>
                 <i
                   class="fa-solid fa-circle-chevron-down"
-                  :class="{ rotate: this.store.showDetails }"
-                  @click.prevent="showInfo()"
+                  :class="{
+                    rotate:
+                      this.store.showDetailsSeries &&
+                      index === this.store.cardIndex,
+                  }"
                 ></i>
               </div>
               <div class="description">
@@ -108,10 +118,6 @@ export default {
     height: 100%;
     border-radius: 0 0 100px 100px;
     transition: top 0.3s linear, border-radius 0.3s linear;
-    &:hover {
-      top: 0;
-      border-radius: 0 0 0 0;
-    }
     .fa-circle-chevron-down {
       position: absolute;
       color: white;

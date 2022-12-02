@@ -14,12 +14,6 @@ export default {
       store,
     };
   },
-  methods: {
-    getCardIndex(index) {
-      this.store.cardIndex = index;
-      console.log(this.store.cardIndex);
-    },
-  },
 };
 </script>
 
@@ -29,16 +23,16 @@ export default {
     <div class="movies">
       <AppCardMovies
         v-for="(movie, index) in store.movies"
-        @mouseover="getCardIndex(index)"
         :movie="movie"
+        :index="index"
       />
     </div>
     <div class="series-search">Le serie tv del momento</div>
     <div class="series">
       <AppCardSeries
-        v-for="serie in store.series"
+        v-for="(serie, index) in store.series"
         :serie="serie"
-        @mouseover="getCardIndex(index)"
+        :index="index"
       />
     </div>
   </section>

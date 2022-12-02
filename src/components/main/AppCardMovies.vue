@@ -9,6 +9,7 @@ export default {
   },
   props: {
     movie: Object,
+    index: Number,
   },
   data() {
     return {
@@ -37,6 +38,7 @@ export default {
       }
     },
     showInfo() {
+      this.store.cardIndex = this.index;
       this.store.showDetails = !this.store.showDetails;
     },
   },
@@ -55,9 +57,13 @@ export default {
             />
             <div
               class="card-details"
-              :class="{ active: this.store.showDetails }"
+              :class="{
+                active:
+                  this.store.showDetails && index === this.store.cardIndex,
+              }"
+              @click="showInfo()"
             >
-              <h3>Titolo: {{ movie.title }}</h3>
+              <h3>Titolo: {{ movie.title }} {{ index }}</h3>
               <h3>Titolo originale: {{ movie.original_title }}</h3>
               <country-flag
                 class="ms-flag"
@@ -76,7 +82,10 @@ export default {
                 ></i>
                 <i
                   class="fa-solid fa-circle-chevron-down"
-                  @click.prevent="showInfo()"
+                  :class="{
+                    rotate:
+                      this.store.showDetails && index === this.store.cardIndex,
+                  }"
                 ></i>
               </div>
               <div class="description">
@@ -108,10 +117,10 @@ export default {
     height: 100%;
     border-radius: 0 0 100px 100px;
     transition: top 0.3s linear, border-radius 0.3s linear;
-    &:hover {
-      top: 0;
-      border-radius: 0 0 0 0;
-    }
+    // &:hover {
+    //   top: 0;
+    //   border-radius: 0 0 0 0;
+    // }
     .fa-circle-chevron-down {
       position: absolute;
       color: white;
@@ -142,5 +151,8 @@ img {
 .active {
   top: 0 !important;
   border-radius: 0 0 0 0 !important;
+}
+.rotate {
+  transform: translateX(-50%) rotateZ(180deg) !important;
 }
 </style>
