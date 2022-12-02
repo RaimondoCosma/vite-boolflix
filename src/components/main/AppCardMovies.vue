@@ -45,14 +45,18 @@ export default {
     },
     getActors() {
       axios
-        .get("`https://api.themoviedb.org/3/movie/${movies[1].id}/credits`", {
-          params: {
-            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
-          },
-        })
+        .get(
+          `https://api.themoviedb.org/3/movie/${
+            this.store.movies[this.index].id
+          }/credits`,
+          {
+            params: {
+              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+            },
+          }
+        )
         .then((resp) => {
-          this.store.actors = resp;
-          console.log(resp);
+          this.store.characters = resp.data.cast;
         });
     },
   },
@@ -109,7 +113,18 @@ export default {
                 <h4>Descrizione:</h4>
                 <p class="description-text">{{ movie.overview }}</p>
               </div>
-              <div class="actor">{{}}</div>
+              <div class="cast">
+                <h4>Cast:</h4>
+                <ul
+                  class="actor"
+                  v-if="
+                    this.store.characters.length > 0 && this.store.showDetails
+                  "
+                  v-for="n in 5"
+                >
+                  <li>{{ this.store.characters[n].name }}</li>
+                </ul>
+              </div>
             </div>
           </div>
         </a>
@@ -167,6 +182,9 @@ img {
   .rated {
     color: rgb(192, 192, 69);
   }
+}
+.cast {
+  text-align: center;
 }
 .description-text {
   max-height: 6.25rem;

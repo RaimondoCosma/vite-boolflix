@@ -1,5 +1,6 @@
 <script>
 import { store } from "../../store";
+import axios from "axios";
 import CountryFlag from "vue-country-flag-next";
 
 export default {
@@ -40,6 +41,23 @@ export default {
     showInfo() {
       this.store.cardIndex = this.index;
       this.store.showDetailsSeries = !this.store.showDetailsSeries;
+      this.getActors();
+    },
+    getActors() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/tv/${
+            this.store.series[this.index].id
+          }/credits`,
+          {
+            params: {
+              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+            },
+          }
+        )
+        .then((resp) => {
+          this.store.seriesCharacters = resp.data.cast;
+        });
     },
   },
 };
@@ -96,6 +114,19 @@ export default {
               <div class="description">
                 <h4>Descrizione:</h4>
                 <p class="description-text">{{ serie.overview }}</p>
+              </div>
+              <div class="cast">
+                <ul>
+                  <li
+                    v-if="
+                      this.store.seriesCharacters.length > 0 &&
+                      this.store.showDetailsSeries
+                    "
+                    v-for="n in 5"
+                  >
+                    {{ this.store.seriesCharacters[n].name }}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -158,6 +189,9 @@ img {
 }
 .rated {
   color: rgb(192, 192, 69);
+}
+.cast {
+  text-align: center;
 }
 .description-text {
   max-height: 6.25rem;
