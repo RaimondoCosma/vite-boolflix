@@ -14,29 +14,57 @@ export default {
       store,
     };
   },
+  methods: {
+    getCardIndex(index) {
+      this.store.cardIndex = index;
+      console.log(this.store.cardIndex);
+    },
+  },
 };
 </script>
 
 <template>
   <section class="container">
-    <AppCardMovies class="card" v-for="movie in store.movies" :movie="movie" />
-    <AppCardSeries class="card" v-for="serie in store.series" :serie="serie" />
+    <div class="movies-search">I titoli del momento</div>
+    <div class="movies">
+      <AppCardMovies
+        v-for="(movie, index) in store.movies"
+        @mouseover="getCardIndex(index)"
+        :movie="movie"
+      />
+    </div>
+    <div class="series-search">Le serie tv del momento</div>
+    <div class="series">
+      <AppCardSeries
+        v-for="serie in store.series"
+        :serie="serie"
+        @mouseover="getCardIndex(index)"
+      />
+    </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-.container {
+.movies-search,
+.series-search {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0.9375rem 0 0.625rem;
+}
+.movies,
+.series {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
-.card {
-  width: calc(100% / 4 - 1.25rem);
-  margin: 0 0.625rem;
-  @include media-breackpoint-up(md) {
-    width: calc(100% / 3 - 1.25rem);
-  }
-  @include media-breackpoint-up(sm) {
-    width: calc(100% / 2 - 1.25rem);
-  }
+.movies > div,
+.series > div {
+  flex-shrink: 0;
+  width: 17.5rem;
+  border: 2px solid black;
 }
+// .card {
+//   width: 21.875rem;
+//   margin: 0.625rem 0.625rem;
+// }
 </style>

@@ -53,6 +53,31 @@ export default {
           this.errorOccurred = true;
         });
     },
+    topRatedShows() {
+      axios
+        .get("https://api.themoviedb.org/3/movie/top_rated", {
+          params: {
+            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+            language: "it-IT",
+          },
+        })
+        .then((resp) => {
+          this.store.movies = resp.data.results;
+        });
+      axios
+        .get("https://api.themoviedb.org/3/tv/top_rated", {
+          params: {
+            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+            language: "it-IT",
+          },
+        })
+        .then((resp) => {
+          this.store.series = resp.data.results;
+        });
+    },
+  },
+  created() {
+    this.topRatedShows();
   },
 };
 </script>

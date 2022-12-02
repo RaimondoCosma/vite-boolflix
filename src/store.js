@@ -5,4 +5,7 @@ export const store = reactive({
   errorOccurred: false,
   movies: [],
   series: [],
+  actors: [],
+  showDetails: false,
+  cardIndex: 0,
 });
