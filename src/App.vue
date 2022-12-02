@@ -2,7 +2,7 @@
 import { store } from "./store";
 import axios from "axios";
 import AppHeader from "./components/header/AppHeader.vue";
-import AppError from "./components/error/AppError.vue";
+import AppError from "./components/commons/AppError.vue";
 import AppMain from "./components/main/AppMain.vue";
 
 export default {
@@ -28,8 +28,8 @@ export default {
         })
         .then((resp) => {
           this.store.movies = resp.data.results;
-          if (this.errorOccurred) {
-            this.errorOccurred = !this.errorOccurred;
+          if (this.store.errorOccurred) {
+            this.store.errorOccurred = !this.store.errorOccurred;
           }
         })
         .catch((err) => {
@@ -45,12 +45,12 @@ export default {
         })
         .then((resp) => {
           this.store.series = resp.data.results;
-          if (this.errorOccurred) {
-            this.errorOccurred = !this.errorOccurred;
+          if (this.store.errorOccurred) {
+            this.store.errorOccurred = !this.store.errorOccurred;
           }
         })
         .catch((err) => {
-          this.errorOccurred = true;
+          this.store.errorOccurred = true;
         });
     },
     topRatedShows() {
@@ -63,6 +63,9 @@ export default {
         })
         .then((resp) => {
           this.store.movies = resp.data.results;
+          if (this.store.errorOccurred) {
+            this.store.errorOccurred = !this.store.errorOccurred;
+          }
         });
       axios
         .get("https://api.themoviedb.org/3/tv/top_rated", {
@@ -73,6 +76,9 @@ export default {
         })
         .then((resp) => {
           this.store.series = resp.data.results;
+          if (this.store.errorOccurred) {
+            this.store.errorOccurred = !this.store.errorOccurred;
+          }
         });
     },
   },
@@ -84,11 +90,11 @@ export default {
 
 <template>
   <header>
-    <AppHeader @search="moviesSearch" />
-    <AppError v-if="errorOccurred" />
+    <AppHeader @search="moviesSearch" :method="topRatedShows" />
   </header>
   <main>
-    <AppMain />
+    <AppError v-if="this.store.errorOccurred" />
+    <AppMain v-else />
   </main>
 </template>
 

@@ -2,7 +2,7 @@ import { reactive } from "vue";
 
 export const store = reactive({
   inputText: "",
-  errorOccurred: false,
+  errorOccurred: true,
   movies: [],
   series: [],
   actors: [],

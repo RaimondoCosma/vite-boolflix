@@ -64,14 +64,18 @@ export default {
               }"
               @click="showInfo()"
             >
-              <h3>{{ serie.name }}</h3>
-              <h3>{{ serie.original_name }}</h3>
-              <country-flag
-                class="ms-flag"
-                :country="changeLanguage(serie.original_language)"
-                size="normal"
-              />
+              <h2>{{ serie.name }}</h2>
+              <h3>Titolo originale: {{ serie.original_name }}</h3>
+              <h3>
+                Lingua:
+                <country-flag
+                  class="ms-flag"
+                  :country="changeLanguage(serie.original_language)"
+                  size="normal"
+                />
+              </h3>
               <div class="rating">
+                <h3>Rating:</h3>
                 <i
                   class="fa-solid fa-star rated"
                   v-for="n in ratingTransform(serie.vote_average)"
@@ -105,12 +109,24 @@ export default {
 .card {
   position: relative;
   overflow: hidden;
+  &:hover img {
+    transform: scale(1.04);
+  }
   &:hover .card-details {
     top: -90%;
   }
+  h2 {
+    text-align: center;
+  }
   .card-details {
-    background-color: #090032b3;
-    color: white;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0)
+    );
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    color: rgb(1, 0, 51);
     position: absolute;
     top: -100%;
     left: 0;
@@ -131,9 +147,14 @@ export default {
 }
 img {
   height: 23.75rem;
+  transition: transform 0.3s linear;
 }
 .rating {
   display: flex;
+  align-items: center;
+  h3 {
+    margin-right: 0.625rem;
+  }
 }
 .rated {
   color: rgb(192, 192, 69);

@@ -3,6 +3,11 @@ import { store } from "../../store";
 
 export default {
   name: "AppHeader",
+  props: {
+    method: {
+      type: Function,
+    },
+  },
   data() {
     return {
       store,
@@ -18,7 +23,9 @@ export default {
         <a href="#"><img src="../../assets/img/netflix.png" alt="logo" /></a>
       </div>
       <ul>
-        <li><a href="#">Home</a></li>
+        <li @click="method()">
+          <a href="#">Home</a>
+        </li>
         <li><a href="#">Film</a></li>
         <li><a href="#">Serie TV</a></li>
       </ul>
