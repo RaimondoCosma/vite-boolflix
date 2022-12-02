@@ -116,6 +116,7 @@ export default {
                 <p class="description-text">{{ serie.overview }}</p>
               </div>
               <div class="cast">
+                <h4>Cast:</h4>
                 <ul>
                   <li
                     v-if="
