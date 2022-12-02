@@ -81,9 +81,21 @@ export default {
           }
         });
     },
+    getActors() {
+      axios
+        .get("https://api.themoviedb.org/3/movie/67/credits", {
+          params: {
+            api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+        });
+    },
   },
   created() {
     this.topRatedShows();
+    this.getActors;
   },
 };
 </script>

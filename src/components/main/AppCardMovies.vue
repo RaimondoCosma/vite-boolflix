@@ -41,7 +41,6 @@ export default {
       this.store.cardIndex = this.index;
       this.store.showDetails = !this.store.showDetails;
     },
-    movieCredits() {},
   },
 };
 </script>
@@ -96,6 +95,7 @@ export default {
                 <h4>Descrizione:</h4>
                 <p class="description-text">{{ movie.overview }}</p>
               </div>
+              <div class="actor">{{}}</div>
             </div>
           </div>
         </a>
