@@ -11,7 +11,17 @@ export default {
   data() {
     return {
       store,
+      isVisible: false,
     };
+  },
+  methods: {
+    showDropdown() {
+      this.isVisible = !this.isVisible;
+    },
+    changeUser() {
+      this.isVisible = false;
+      this.store.showHome = false;
+    },
   },
 };
 </script>
@@ -38,9 +48,14 @@ export default {
     </form>
     <div class="user-logged nav-right">
       <h3>{{ store.userName }}</h3>
-      <a class="user-image" href="#">
+      <a class="user-image" href="#" @click.prevent="showDropdown">
         <img src="../../assets/img/person.png" alt="#" />
       </a>
+      <div class="drop-down" :class="{ 'show-dropdown': isVisible === true }">
+        <ul>
+          <li><a href="#" @click.prevent="changeUser">Cambia Utente</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -97,6 +112,20 @@ button {
   h3 {
     margin-right: 0.625rem;
   }
+  .drop-down {
+    position: fixed;
+    top: 3.75rem;
+    right: -10.625rem;
+    background-color: aliceblue;
+    padding: 0.625rem;
+    transition: right 0.3s linear;
+    a {
+      color: black;
+    }
+  }
+}
+.show-dropdown {
+  right: 0 !important;
 }
 .user-image {
   width: 3.125rem;

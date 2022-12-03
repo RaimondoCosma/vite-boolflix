@@ -47,7 +47,7 @@ export default {
   bottom: 0;
   background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/0678255b-ecfd-4775-999a-0680d539f07c/64d886ab-fff2-4014-9057-0eed1ac64c63/IT-it-20221128-popsignuptwoweeks-perspective_alpha_website_small.jpg");
   z-index: 500;
-  transition: left 0.3s ease-out;
+  transition: left 0.5s ease-out;
 }
 .card-user {
   background-color: rgba(0, 0, 0, 0.75);
@@ -62,7 +62,9 @@ export default {
   align-items: center;
   .img {
     height: 50%;
-    width: 70%;
+    width: 66%;
+    border-radius: 50%;
+    overflow: hidden;
     img {
       height: 100%;
       object-fit: cover;
