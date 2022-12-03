@@ -2,6 +2,7 @@
 import { store } from "./store";
 import axios from "axios";
 import AppWelcome from "./components/commons/AppWelcome.vue";
+import AppUser from "./components/commons/AppUser.vue";
 import AppHeader from "./components/header/AppHeader.vue";
 import AppError from "./components/commons/AppError.vue";
 import AppMain from "./components/main/AppMain.vue";
@@ -9,6 +10,7 @@ import AppMain from "./components/main/AppMain.vue";
 export default {
   components: {
     AppWelcome,
+    AppUser,
     AppHeader,
     AppError,
     AppMain,
@@ -83,15 +85,21 @@ export default {
           }
         });
     },
+    netflixSound() {
+      const audio = new Audio("./src/assets/audio/netflix-sound.mp3");
+      audio.play();
+    },
   },
   created() {
     this.topRatedShows();
+    this.netflixSound();
   },
 };
 </script>
 
 <template>
   <AppWelcome />
+  <AppUser />
   <header>
     <AppHeader @search="moviesSearch" :method="topRatedShows" />
   </header>

@@ -45,6 +45,9 @@ export default {
   font-size: 1.5rem;
   margin: 0.9375rem 0 0.625rem;
 }
+.movies-search {
+  margin-top: 0.625rem;
+}
 .movies,
 .series {
   display: flex;
@@ -57,8 +60,4 @@ export default {
   width: 17.5rem;
   border: 2px solid black;
 }
-// .card {
-//   width: 21.875rem;
-//   margin: 0.625rem 0.625rem;
-// }
 </style>
