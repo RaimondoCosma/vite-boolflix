@@ -38,6 +38,9 @@ export default {
         return string;
       }
     },
+    getCardIndex() {
+      this.store.cardIndex = this.index;
+    },
     showInfo() {
       this.store.cardIndex = this.index;
       this.store.showDetails = !this.store.showDetails;
@@ -59,6 +62,11 @@ export default {
           this.store.characters = resp.data.cast;
         });
     },
+    showPreview() {
+      this.store.cardIndex = this.index;
+      this.store.previewVisible = true;
+      this.getActors();
+    },
   },
 };
 </script>
@@ -68,7 +76,7 @@ export default {
     <ul>
       <li>
         <a href="#">
-          <div class="card">
+          <div class="card" @click="showPreview()">
             <img
               :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`"
               :alt="movie.title"
@@ -79,7 +87,7 @@ export default {
                 active:
                   this.store.showDetails && index === this.store.cardIndex,
               }"
-              @click="showInfo()"
+              @click.stop="showInfo()"
             >
               <h2>{{ movie.title }} {{ index }}</h2>
               <h3>Titolo originale: {{ movie.original_title }}</h3>

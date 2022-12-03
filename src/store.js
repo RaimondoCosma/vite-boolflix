@@ -11,5 +11,7 @@ export const store = reactive({
   showHome: false,
   showDetails: false,
   showDetailsSeries: false,
+  previewVisible: false,
   cardIndex: 0,
+  serieIndex: 0,
 });

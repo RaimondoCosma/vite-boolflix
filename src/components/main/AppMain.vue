@@ -2,12 +2,14 @@
 import { store } from "../../store";
 import AppCardMovies from "./AppCardMovies.vue";
 import AppCardSeries from "./AppCardSeries.vue";
+import ShowFilm from "./ShowFilm.vue";
 
 export default {
   name: "AppMain",
   components: {
     AppCardMovies,
     AppCardSeries,
+    ShowFilm,
   },
   data() {
     return {
@@ -35,6 +37,7 @@ export default {
         :index="index"
       />
     </div>
+    <ShowFilm />
   </section>
 </template>
 

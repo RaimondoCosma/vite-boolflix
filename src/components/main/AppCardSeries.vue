@@ -80,7 +80,7 @@ export default {
                   this.store.showDetailsSeries &&
                   index === this.store.cardIndex,
               }"
-              @click.prevent="showInfo()"
+              @click.prevent.stop="showInfo()"
             >
               <h2>{{ serie.name }}</h2>
               <h3>Titolo originale: {{ serie.original_name }}</h3>
