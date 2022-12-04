@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       store,
+      n: 0,
     };
   },
   methods: {
@@ -76,7 +77,9 @@ export default {
           }
         )
         .then((resp) => {
-          this.store.serieTrailers = resp.data.results[0].key;
+          if (resp.data.results[0]) {
+            this.store.serieTrailers = resp.data.results[0].key;
+          }
         });
     },
     getSimilarSeries() {
@@ -171,7 +174,8 @@ export default {
                   <li
                     v-if="
                       this.store.seriesCharacters.length > 0 &&
-                      this.store.showDetailsSeries
+                      this.store.showDetailsSeries &&
+                      this.store.seriesCharacters[n]
                     "
                     v-for="n in 5"
                   >

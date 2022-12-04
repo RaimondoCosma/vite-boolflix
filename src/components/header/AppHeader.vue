@@ -62,6 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 .nav {
+  padding: 0.25rem 0.4375rem;
   display: flex;
   align-items: center;
   & > div {
@@ -71,6 +72,16 @@ export default {
   .nav-left,
   .nav-right {
     width: 30%;
+  }
+  .nav-left {
+    @include media-breackpoint-up(lg) {
+      width: 18.125rem;
+    }
+  }
+  .nav-right {
+    @include media-breackpoint-up(lg) {
+      width: 9.375rem;
+    }
   }
   .nav-middle {
     flex-grow: 1;
@@ -100,6 +111,9 @@ form input {
 }
 button {
   width: 10%;
+  @include media-breackpoint-up(lg) {
+    flex-shrink: 0;
+  }
   i {
     font-size: 1.25rem;
     padding: 0.625rem;

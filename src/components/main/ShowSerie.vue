@@ -45,15 +45,12 @@ export default {
     </div>
     <!-- /Immagine di copertina con tasto play -->
     <!-- Dettagli sulla destra dell'immagine -->
-    <div class="all-detail">
-      <h1 v-if="this.store.series[this.store.serieIndex]">
+    <div v-if="this.store.series[this.store.serieIndex]" class="all-detail">
+      <h1>
         {{ this.store.series[this.store.serieIndex].name }}
       </h1>
       <h2>Descrizione:</h2>
-      <p
-        v-if="this.store.series[this.store.serieIndex]"
-        class="description-text"
-      >
+      <p class="description-text">
         {{ this.store.series[this.store.serieIndex].overview }}
       </p>
       <div class="rating">
@@ -61,13 +58,15 @@ export default {
         <i
           class="fa-solid fa-star rated yellow"
           v-for="n in ratingTransform(
-            this.store.movies[this.store.cardIndex].vote_average
+            this.store.series[this.store.serieIndex].vote_average
           )"
         ></i>
         <i
           class="fa-solid fa-star"
           v-for="n in 5 -
-          ratingTransform(this.store.movies[this.store.cardIndex].vote_average)"
+          ratingTransform(
+            this.store.series[this.store.serieIndex].vote_average
+          )"
         ></i>
       </div>
       <h4>Cast:</h4>

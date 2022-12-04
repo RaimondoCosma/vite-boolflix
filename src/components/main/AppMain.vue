@@ -91,7 +91,13 @@ export default {
 .movies > div,
 .series > div {
   flex-shrink: 0;
-  width: 17.5rem;
+  width: calc(100% / 4);
   border: 2px solid black;
+  @include media-breackpoint-up(lg) {
+    width: calc(100% / 3);
+  }
+  @include media-breackpoint-up(sm) {
+    width: calc(100% / 2);
+  }
 }
 </style>
