@@ -38,9 +38,14 @@ export default {
     <!-- /Immagine di copertina con tasto play -->
     <!-- Dettagli sulla destra dell'immagine -->
     <div class="all-detail">
-      <h1>{{ this.store.movies[this.store.cardIndex].title }}</h1>
+      <h1 v-if="this.store.movies[this.store.cardIndex]">
+        {{ this.store.movies[this.store.cardIndex].title }}
+      </h1>
       <h2>Descrizione:</h2>
-      <p class="description-text">
+      <p
+        v-if="this.store.movies[this.store.cardIndex]"
+        class="description-text"
+      >
         {{ this.store.movies[this.store.cardIndex].overview }}
       </p>
       <div class="rating">

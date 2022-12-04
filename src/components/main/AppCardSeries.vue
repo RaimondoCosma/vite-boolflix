@@ -115,7 +115,7 @@ export default {
           <div class="card" @click.prevent="showPreview()">
             <img
               v-if="serie.poster_path"
-              :src="`https://image.tmdb.org/t/p/w342${serie.poster_path}`"
+              :src="`https://image.tmdb.org/t/p/original${serie.poster_path}`"
               alt="serie.title"
             />
             <img
