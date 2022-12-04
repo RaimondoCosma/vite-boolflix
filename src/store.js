@@ -2,6 +2,7 @@ import { reactive } from "vue";
 
 export const store = reactive({
   inputText: "",
+  isSearch: false,
   userName: "",
   errorOccurred: true,
 

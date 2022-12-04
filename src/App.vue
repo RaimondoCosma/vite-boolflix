@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     moviesSearch() {
+      this.store.isSearch = true;
       this.store.previewVisible = false;
       this.store.previewVisibleSerie = false;
       axios
@@ -60,6 +61,7 @@ export default {
         });
     },
     topRatedShows() {
+      this.store.isSearch = false;
       axios
         .get("https://api.themoviedb.org/3/movie/top_rated", {
           params: {

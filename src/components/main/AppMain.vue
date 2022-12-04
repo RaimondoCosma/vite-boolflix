@@ -23,7 +23,21 @@ export default {
 
 <template>
   <section class="container">
-    <div class="movies-search">I titoli del momento</div>
+    <div
+      v-if="this.store.movies.length > 0 && this.store.isSearch === false"
+      class="movies-search"
+    >
+      I titoli del momento
+    </div>
+    <div
+      v-else-if="this.store.movies.length > 0 && this.store.isSearch === true"
+      class="movies-search"
+    >
+      Film trovati per: "{{ store.inputText }}"
+    </div>
+    <div v-else class="movies-search">
+      Non sono stati trovati film per: "{{ store.inputText }}"
+    </div>
     <div class="movies">
       <AppCardMovies
         v-for="(movie, index) in store.movies"
@@ -31,7 +45,21 @@ export default {
         :index="index"
       />
     </div>
-    <div class="series-search">Le serie tv del momento</div>
+    <div
+      v-if="this.store.series.length > 0 && this.store.isSearch === false"
+      class="movies-search"
+    >
+      Le serie tv del momento
+    </div>
+    <div
+      v-else-if="this.store.series.length > 0 && this.store.isSearch === true"
+      class="movies-search"
+    >
+      Serie trovate per: "{{ store.inputText }}"
+    </div>
+    <div v-else class="movies-search">
+      Non sono state trovate serie per: "{{ store.inputText }}"
+    </div>
     <div class="series">
       <AppCardSeries
         v-for="(serie, index) in store.series"
