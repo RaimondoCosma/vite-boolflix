@@ -4,15 +4,25 @@ export const store = reactive({
   inputText: "",
   userName: "",
   errorOccurred: true,
-  movies: [],
-  series: [],
-  characters: [],
-  seriesCharacters: [],
-  movieTrailers: [],
-  showHome: false,
-  showDetails: false,
-  showDetailsSeries: false,
-  previewVisible: false,
+
+  // Variabili utili per i film
   cardIndex: 0,
+  movies: [],
+  similarMovies: [],
+  characters: [],
+  movieTrailers: [],
+  showDetails: false,
+  previewVisible: false,
+
+  // Variabili utili per le serie tv
   serieIndex: 0,
+  series: [],
+  similarSeries: [],
+  seriesCharacters: [],
+  serieTrailers: [],
+  showDetailsSeries: false,
+  previewVisibleSerie: false,
+
+  // Varibili in comune
+  showHome: false,
 });

@@ -38,8 +38,11 @@ export default {
         return string;
       }
     },
+    getSerieIndex() {
+      this.store.serieIndex = this.index;
+    },
     showInfo() {
-      this.store.cardIndex = this.index;
+      this.getSerieIndex();
       this.store.showDetailsSeries = !this.store.showDetailsSeries;
       this.getActors();
     },
@@ -47,7 +50,7 @@ export default {
       axios
         .get(
           `https://api.themoviedb.org/3/tv/${
-            this.store.series[this.index].id
+            this.store.series[this.store.serieIndex].id
           }/credits`,
           {
             params: {
@@ -59,6 +62,47 @@ export default {
           this.store.seriesCharacters = resp.data.cast;
         });
     },
+    getTrailer() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/tv/${
+            this.store.series[this.store.serieIndex].id
+          }/videos`,
+          {
+            params: {
+              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+              lang: "it-IT",
+            },
+          }
+        )
+        .then((resp) => {
+          this.store.serieTrailers = resp.data.results[0].key;
+        });
+    },
+    getSimilarSeries() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/tv/${
+            this.store.series[this.store.serieIndex].id
+          }/similar`,
+          {
+            params: {
+              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+              lang: "it-IT",
+            },
+          }
+        )
+        .then((resp) => {
+          this.store.similarSeries = resp.data.results;
+        });
+    },
+    showPreview() {
+      this.getSerieIndex();
+      this.store.previewVisibleSerie = true;
+      this.getActors();
+      this.getTrailer();
+      this.getSimilarSeries();
+    },
   },
 };
 </script>
@@ -68,7 +112,7 @@ export default {
     <ul>
       <li>
         <a href="#">
-          <div class="card">
+          <div class="card" @click.prevent="showPreview()">
             <img
               :src="`https://image.tmdb.org/t/p/w342${serie.poster_path}`"
               alt="movie.title"
@@ -78,7 +122,7 @@ export default {
               :class="{
                 active:
                   this.store.showDetailsSeries &&
-                  index === this.store.cardIndex,
+                  index === this.store.serieIndex,
               }"
               @click.stop.prevent="showInfo()"
             >

@@ -3,6 +3,7 @@ import { store } from "../../store";
 import AppCardMovies from "./AppCardMovies.vue";
 import AppCardSeries from "./AppCardSeries.vue";
 import ShowFilm from "./ShowFilm.vue";
+import ShowSerie from "./ShowSerie.vue";
 
 export default {
   name: "AppMain",
@@ -10,6 +11,7 @@ export default {
     AppCardMovies,
     AppCardSeries,
     ShowFilm,
+    ShowSerie,
   },
   data() {
     return {
@@ -38,6 +40,7 @@ export default {
       />
     </div>
     <ShowFilm />
+    <ShowSerie />
   </section>
 </template>
 

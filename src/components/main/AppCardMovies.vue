@@ -71,12 +71,29 @@ export default {
           {
             params: {
               api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+              lang: "it-IT",
             },
           }
         )
         .then((resp) => {
-          console.log(resp.data.results[0].key);
           this.store.movieTrailers = resp.data.results[0].key;
+        });
+    },
+    getSimilarMovies() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${
+            this.store.movies[this.store.cardIndex].id
+          }/similar`,
+          {
+            params: {
+              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+              lang: "it-IT",
+            },
+          }
+        )
+        .then((resp) => {
+          this.store.similarMovies = resp.data.results;
         });
     },
     showPreview() {
@@ -84,6 +101,7 @@ export default {
       this.store.previewVisible = true;
       this.getActors();
       this.getTrailer();
+      this.getSimilarMovies();
     },
   },
 };

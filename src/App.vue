@@ -22,6 +22,8 @@ export default {
   },
   methods: {
     moviesSearch() {
+      this.store.previewVisible = false;
+      this.store.previewVisibleSerie = false;
       axios
         .get("https://api.themoviedb.org/3/search/movie", {
           params: {

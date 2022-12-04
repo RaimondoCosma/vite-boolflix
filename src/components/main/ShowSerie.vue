@@ -1,7 +1,8 @@
 <script>
 import { store } from "../../store";
+
 export default {
-  name: "ShowFilm",
+  name: "ShowSerie",
   data() {
     return {
       store,
@@ -12,24 +13,31 @@ export default {
       return Math.ceil((Number(num) * 5) / 10);
     },
     closePreview() {
-      this.store.previewVisible = false;
+      this.store.previewVisibleSerie = false;
     },
   },
 };
 </script>
-
 <template>
-  <section class="film-details" :class="{ active: this.store.previewVisible }">
+  <section
+    class="serie-details"
+    :class="{ 'active-serie': this.store.previewVisibleSerie }"
+  >
+    <!-- Croce per chiudere i dettagli -->
+    <div class="cross" @click="closePreview">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+    <!-- /Croce per chiudere i dettagli -->
     <!-- Immagine di copertina con tasto play -->
     <div class="preview">
       <img
         :src="`https://image.tmdb.org/t/p/w342${
-          this.store.movies[this.store.cardIndex].poster_path
+          this.store.series[this.store.serieIndex].poster_path
         }`"
         alt="#"
       />
       <a
-        :href="`https://www.youtube.com/watch?v=${this.store.movieTrailers}`"
+        :href="`https://www.youtube.com/watch?v=${this.store.serieTrailers}`"
         target="_blank"
         ><i class="fa-regular fa-circle-play"></i
       ></a>
@@ -37,10 +45,10 @@ export default {
     <!-- /Immagine di copertina con tasto play -->
     <!-- Dettagli sulla destra dell'immagine -->
     <div class="all-detail">
-      <h1>{{ this.store.movies[this.store.cardIndex].title }}</h1>
+      <h1>{{ this.store.series[this.store.serieIndex].name }}</h1>
       <h2>Descrizione:</h2>
       <p class="description-text">
-        {{ this.store.movies[this.store.cardIndex].overview }}
+        {{ this.store.series[this.store.serieIndex].overview }}
       </p>
       <div class="rating">
         <h2>Voto:</h2>
@@ -57,18 +65,15 @@ export default {
         ></i>
       </div>
       <h4>Cast:</h4>
-      <ul class="actor" v-if="this.store.characters.length > 0">
-        <li v-for="character in this.store.characters">
+      <ul class="actor" v-if="this.store.seriesCharacters.length > 0">
+        <li v-for="character in this.store.seriesCharacters">
           {{ character.name }} -
         </li>
       </ul>
-      <div class="cross" @click="closePreview">
-        <i class="fa-solid fa-xmark"></i>
-      </div>
-      <!-- Film simili  -->
+      <!-- Serie simili  -->
       <h4 class="similar">Ti potrebbe interessare:</h4>
-      <ul class="suggested-film">
-        <li v-for="movie in this.store.similarMovies">
+      <ul class="suggested-serie">
+        <li v-for="movie in this.store.similarSeries">
           <a href="#"
             ><img
               :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`"
@@ -76,16 +81,17 @@ export default {
           /></a>
         </li>
       </ul>
-      <!-- /Film simili  -->
+      <!-- /Serie simili  -->
     </div>
     <!-- /Dettagli sulla destra dell'immagine -->
   </section>
 </template>
 
 <style lang="scss" scoped>
-.film-details {
+.serie-details {
   display: flex;
   position: fixed;
+  color: white;
   bottom: -100%;
   left: 0;
   right: 0;
@@ -131,40 +137,39 @@ export default {
     .rating {
       margin-bottom: 0.9375rem;
     }
+    .actor {
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
-  .cross {
-    position: absolute;
-    font-size: 2.5rem;
-    cursor: pointer;
-    right: 1.25rem;
-    top: 1.25rem;
+  .similar {
+    margin: 1.25rem 0;
+  }
+  .suggested-serie {
+    overflow-x: auto;
+    display: flex;
+    width: 100%;
+    li {
+      width: calc(100% / 5);
+      height: 19.6875rem;
+      border: 0.0625rem solid #1b1b1b;
+      flex-shrink: 0;
+    }
   }
 }
-.similar {
-  margin: 1.25rem 0;
-}
-.suggested-film {
-  overflow-x: auto;
-  display: flex;
-  width: 100%;
-  li {
-    width: calc(100% / 5);
-    height: 19.6875rem;
-    flex-shrink: 0;
-    border: 0.0625rem solid #1b1b1b;
-  }
+.cross {
+  position: absolute;
+  font-size: 2.5rem;
+  cursor: pointer;
+  right: 1.25rem;
+  top: 1.25rem;
 }
 .yellow {
   color: rgb(207, 207, 45);
 }
-.active {
+.active-serie {
   bottom: 0 !important;
 }
-.actor {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 @keyframes pulse {
   0% {
     transform: scale(0.9) translateX(-50%);
