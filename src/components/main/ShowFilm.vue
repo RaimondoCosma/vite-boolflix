@@ -23,6 +23,7 @@ export default {
     <!-- Immagine di copertina con tasto play -->
     <div class="preview">
       <img
+        v-if="this.store.movies[this.store.cardIndex]"
         :src="`https://image.tmdb.org/t/p/w342${
           this.store.movies[this.store.cardIndex].poster_path
         }`"

@@ -31,6 +31,7 @@ export default {
     <!-- Immagine di copertina con tasto play -->
     <div class="preview">
       <img
+        v-if="this.store.series[this.store.serieIndex]"
         :src="`https://image.tmdb.org/t/p/w342${
           this.store.series[this.store.serieIndex].poster_path
         }`"
@@ -45,9 +46,14 @@ export default {
     <!-- /Immagine di copertina con tasto play -->
     <!-- Dettagli sulla destra dell'immagine -->
     <div class="all-detail">
-      <h1>{{ this.store.series[this.store.serieIndex].name }}</h1>
+      <h1 v-if="this.store.series[this.store.serieIndex]">
+        {{ this.store.series[this.store.serieIndex].name }}
+      </h1>
       <h2>Descrizione:</h2>
-      <p class="description-text">
+      <p
+        v-if="this.store.series[this.store.serieIndex]"
+        class="description-text"
+      >
         {{ this.store.series[this.store.serieIndex].overview }}
       </p>
       <div class="rating">
