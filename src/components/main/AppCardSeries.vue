@@ -114,8 +114,14 @@ export default {
         <a href="#">
           <div class="card" @click.prevent="showPreview()">
             <img
+              v-if="serie.poster_path"
               :src="`https://image.tmdb.org/t/p/w342${serie.poster_path}`"
-              alt="movie.title"
+              alt="serie.title"
+            />
+            <img
+              v-else
+              src="../../assets/img/poster-placeholder.png"
+              alt="serie.title"
             />
             <div
               class="card-details"
