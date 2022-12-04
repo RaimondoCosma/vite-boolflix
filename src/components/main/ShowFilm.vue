@@ -14,22 +14,6 @@ export default {
     closePreview() {
       this.store.previewVisible = false;
     },
-    getActors() {
-      axios
-        .get(
-          `https://api.themoviedb.org/3/movie/${
-            this.store.movies[this.cardIndex].id
-          }/credits`,
-          {
-            params: {
-              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
-            },
-          }
-        )
-        .then((resp) => {
-          this.store.characters = resp.data.cast;
-        });
-    },
   },
 };
 </script>
@@ -43,7 +27,7 @@ export default {
         }`"
         alt="#"
       />
-      <a href="https://www.youtube.com/watch?v=bUcG7vd_7aQ"
+      <a :href="`https://www.youtube.com/watch?v=${this.store.movieTrailers}`"
         ><i class="fa-regular fa-circle-play"></i
       ></a>
     </div>

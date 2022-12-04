@@ -85,14 +85,9 @@ export default {
           }
         });
     },
-    netflixSound() {
-      const audio = new Audio("./src/assets/audio/netflix-sound.mp3");
-      audio.play();
-    },
   },
   created() {
     this.topRatedShows();
-    this.netflixSound();
   },
 };
 </script>

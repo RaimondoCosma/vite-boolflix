@@ -62,10 +62,28 @@ export default {
           this.store.characters = resp.data.cast;
         });
     },
+    getTrailer() {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${
+            this.store.movies[this.store.cardIndex].id
+          }/videos`,
+          {
+            params: {
+              api_key: "00594a750bfd21ce80a5ab4ada689cf7",
+            },
+          }
+        )
+        .then((resp) => {
+          console.log(resp.data.results[0].key);
+          this.store.movieTrailers = resp.data.results[0].key;
+        });
+    },
     showPreview() {
       this.store.cardIndex = this.index;
       this.store.previewVisible = true;
       this.getActors();
+      this.getTrailer();
     },
   },
 };
