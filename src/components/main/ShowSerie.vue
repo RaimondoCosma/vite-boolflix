@@ -6,6 +6,7 @@ export default {
   data() {
     return {
       store,
+      active: false,
     };
   },
   methods: {
@@ -15,6 +16,12 @@ export default {
     closePreview() {
       this.store.previewVisibleSerie = false;
     },
+    trailerActive() {
+      this.active = true;
+    },
+    trailerDisable() {
+      this.active = false;
+    },
   },
 };
 </script>
@@ -22,73 +29,83 @@ export default {
   <section
     class="serie-details"
     :class="{ 'active-serie': this.store.previewVisibleSerie }"
+    @click="trailerDisable"
   >
-    <!-- Croce per chiudere i dettagli -->
-    <div class="cross" @click="closePreview">
-      <i class="fa-solid fa-xmark"></i>
-    </div>
-    <!-- /Croce per chiudere i dettagli -->
-    <!-- Immagine di copertina con tasto play -->
-    <div class="preview">
-      <img
-        v-if="this.store.series[this.store.serieIndex]"
-        :src="`https://image.tmdb.org/t/p/w342${
-          this.store.series[this.store.serieIndex].poster_path
-        }`"
-        alt="#"
-      />
-      <a
-        :href="`https://www.youtube.com/watch?v=${this.store.serieTrailers}`"
-        target="_blank"
-        ><i class="fa-regular fa-circle-play"></i
-      ></a>
-    </div>
-    <!-- /Immagine di copertina con tasto play -->
-    <!-- Dettagli sulla destra dell'immagine -->
-    <div v-if="this.store.series[this.store.serieIndex]" class="all-detail">
-      <h1>
-        {{ this.store.series[this.store.serieIndex].name }}
-      </h1>
-      <h2>Descrizione:</h2>
-      <p class="description-text">
-        {{ this.store.series[this.store.serieIndex].overview }}
-      </p>
-      <div class="rating">
-        <h2>Voto:</h2>
-        <i
-          class="fa-solid fa-star rated yellow"
-          v-for="n in ratingTransform(
-            this.store.series[this.store.serieIndex].vote_average
-          )"
-        ></i>
-        <i
-          class="fa-solid fa-star"
-          v-for="n in 5 -
-          ratingTransform(
-            this.store.series[this.store.serieIndex].vote_average
-          )"
-        ></i>
+    <iframe
+      v-if="active === true"
+      width="560"
+      height="315"
+      :src="`https://www.youtube.com/embed/${this.store.serieTrailers}`"
+      title="YouTube video player"
+      frameborder="0"
+      allowfullscreen
+    ></iframe>
+    <div class="container-serie" :class="{ blur: active }">
+      <!-- Croce per chiudere i dettagli -->
+      <div class="cross" @click="closePreview">
+        <i class="fa-solid fa-xmark"></i>
       </div>
-      <h4>Cast:</h4>
-      <ul class="actor" v-if="this.store.seriesCharacters.length > 0">
-        <li v-for="character in this.store.seriesCharacters">
-          {{ character.name }} -
-        </li>
-      </ul>
-      <!-- Serie simili  -->
-      <h4 class="similar">Ti potrebbe interessare:</h4>
-      <ul class="suggested-serie">
-        <li v-for="movie in this.store.similarSeries">
-          <a href="#"
-            ><img
-              :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`"
-              alt=""
-          /></a>
-        </li>
-      </ul>
-      <!-- /Serie simili  -->
+      <!-- /Croce per chiudere i dettagli -->
+      <!-- Immagine di copertina con tasto play -->
+      <div class="preview">
+        <img
+          v-if="this.store.series[this.store.serieIndex]"
+          :src="`https://image.tmdb.org/t/p/w342${
+            this.store.series[this.store.serieIndex].poster_path
+          }`"
+          alt="#"
+        />
+        <a @click.stop="trailerActive"
+          ><i class="fa-regular fa-circle-play"></i
+        ></a>
+      </div>
+      <!-- /Immagine di copertina con tasto play -->
+      <!-- Dettagli sulla destra dell'immagine -->
+      <div v-if="this.store.series[this.store.serieIndex]" class="all-detail">
+        <h1>
+          {{ this.store.series[this.store.serieIndex].name }}
+        </h1>
+        <h2>Descrizione:</h2>
+        <p class="description-text">
+          {{ this.store.series[this.store.serieIndex].overview }}
+        </p>
+        <div class="rating">
+          <h2>Voto:</h2>
+          <i
+            class="fa-solid fa-star rated yellow"
+            v-for="n in ratingTransform(
+              this.store.series[this.store.serieIndex].vote_average
+            )"
+          ></i>
+          <i
+            class="fa-solid fa-star"
+            v-for="n in 5 -
+            ratingTransform(
+              this.store.series[this.store.serieIndex].vote_average
+            )"
+          ></i>
+        </div>
+        <h4>Cast:</h4>
+        <ul class="actor" v-if="this.store.seriesCharacters.length > 0">
+          <li v-for="character in this.store.seriesCharacters">
+            {{ character.name }} -
+          </li>
+        </ul>
+        <!-- Serie simili  -->
+        <h4 class="similar">Ti potrebbe interessare:</h4>
+        <ul class="suggested-serie">
+          <li v-for="movie in this.store.similarSeries">
+            <a href="#"
+              ><img
+                :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`"
+                alt=""
+            /></a>
+          </li>
+        </ul>
+        <!-- /Serie simili  -->
+      </div>
+      <!-- /Dettagli sulla destra dell'immagine -->
     </div>
-    <!-- /Dettagli sulla destra dell'immagine -->
   </section>
 </template>
 
@@ -104,6 +121,16 @@ export default {
   background-color: #1b1b1b;
   z-index: 300;
   transition: bottom 0.5s ease-out;
+  iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 400;
+  }
+  .container-serie {
+    display: flex;
+  }
   .preview {
     position: relative;
     width: 30%;
@@ -174,6 +201,9 @@ export default {
 }
 .active-serie {
   bottom: 0 !important;
+}
+.blur {
+  filter: blur(0.625rem);
 }
 @keyframes pulse {
   0% {

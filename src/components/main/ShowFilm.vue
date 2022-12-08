@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       store,
+      active: false,
     };
   },
   methods: {
@@ -14,74 +15,95 @@ export default {
     closePreview() {
       this.store.previewVisible = false;
     },
+    trailerActive() {
+      this.active = true;
+    },
+    trailerDisable() {
+      this.active = false;
+    },
   },
 };
 </script>
 
 <template>
-  <section class="film-details" :class="{ active: this.store.previewVisible }">
-    <!-- Immagine di copertina con tasto play -->
-    <div class="preview">
-      <img
-        v-if="this.store.movies[this.store.cardIndex]"
-        :src="`https://image.tmdb.org/t/p/w342${
-          this.store.movies[this.store.cardIndex].poster_path
-        }`"
-        alt="#"
-      />
-      <a
-        :href="`https://www.youtube.com/watch?v=${this.store.movieTrailers}`"
-        target="_blank"
-        ><i class="fa-regular fa-circle-play"></i
-      ></a>
-    </div>
-    <!-- /Immagine di copertina con tasto play -->
-    <!-- Dettagli sulla destra dell'immagine -->
-    <div v-if="this.store.movies[this.store.cardIndex]" class="all-detail">
-      <h1>
-        {{ this.store.movies[this.store.cardIndex].title }}
-      </h1>
-      <h2>Descrizione:</h2>
-      <p class="description-text">
-        {{ this.store.movies[this.store.cardIndex].overview }}
-      </p>
-      <div class="rating">
-        <h2>Voto:</h2>
-        <i
-          class="fa-solid fa-star rated yellow"
-          v-for="n in ratingTransform(
-            this.store.movies[this.store.cardIndex].vote_average
-          )"
-        ></i>
-        <i
-          class="fa-solid fa-star"
-          v-for="n in 5 -
-          ratingTransform(this.store.movies[this.store.cardIndex].vote_average)"
-        ></i>
+  <section
+    class="film-details"
+    :class="{ active: this.store.previewVisible }"
+    @click="trailerDisable"
+  >
+    <iframe
+      v-if="active === true"
+      width="560"
+      height="315"
+      :src="`https://www.youtube.com/embed/${this.store.movieTrailers}`"
+      title="YouTube video player"
+      frameborder="0"
+      allowfullscreen
+    ></iframe>
+    <div class="container-film" :class="{ blur: active }">
+      <!-- Immagine di copertina con tasto play -->
+      <div class="preview">
+        <img
+          v-if="this.store.movies[this.store.cardIndex]"
+          :src="`https://image.tmdb.org/t/p/w342${
+            this.store.movies[this.store.cardIndex].poster_path
+          }`"
+          alt="#"
+        />
+        <a @click.stop="trailerActive"
+          ><i class="fa-regular fa-circle-play"></i
+        ></a>
       </div>
-      <h4>Cast:</h4>
-      <ul class="actor" v-if="this.store.characters.length > 0">
-        <li v-for="character in this.store.characters">
-          {{ character.name }} -
-        </li>
-      </ul>
-      <div class="cross" @click="closePreview">
-        <i class="fa-solid fa-xmark"></i>
+      <!-- /Immagine di copertina con tasto play -->
+      <!-- Dettagli sulla destra dell'immagine -->
+      <div v-if="this.store.movies[this.store.cardIndex]" class="all-detail">
+        <h1>
+          {{ this.store.movies[this.store.cardIndex].title }}
+        </h1>
+        <h2>Descrizione:</h2>
+        <p class="description-text">
+          {{ this.store.movies[this.store.cardIndex].overview }}
+        </p>
+        <div class="rating">
+          <h2>Voto:</h2>
+          <i
+            class="fa-solid fa-star rated yellow"
+            v-for="n in ratingTransform(
+              this.store.movies[this.store.cardIndex].vote_average
+            )"
+          ></i>
+          <i
+            class="fa-solid fa-star"
+            v-for="n in 5 -
+            ratingTransform(
+              this.store.movies[this.store.cardIndex].vote_average
+            )"
+          ></i>
+        </div>
+        <h4>Cast:</h4>
+        <ul class="actor" v-if="this.store.characters.length > 0">
+          <li v-for="character in this.store.characters">
+            {{ character.name }} -
+          </li>
+        </ul>
+        <div class="cross" @click="closePreview">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+        <!-- Film simili  -->
+        <h4 class="similar">Ti potrebbe interessare:</h4>
+        <ul class="suggested-film">
+          <li v-for="movie in this.store.similarMovies">
+            <a href="#"
+              ><img
+                :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`"
+                alt=""
+            /></a>
+          </li>
+        </ul>
+        <!-- /Film simili  -->
       </div>
-      <!-- Film simili  -->
-      <h4 class="similar">Ti potrebbe interessare:</h4>
-      <ul class="suggested-film">
-        <li v-for="movie in this.store.similarMovies">
-          <a href="#"
-            ><img
-              :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`"
-              alt=""
-          /></a>
-        </li>
-      </ul>
-      <!-- /Film simili  -->
+      <!-- /Dettagli sulla destra dell'immagine -->
     </div>
-    <!-- /Dettagli sulla destra dell'immagine -->
   </section>
 </template>
 
@@ -96,6 +118,16 @@ export default {
   background-color: #1b1b1b;
   z-index: 300;
   transition: bottom 0.5s ease-out;
+  iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 400;
+  }
+  .container-film {
+    display: flex;
+  }
   .preview {
     position: relative;
     width: 30%;
@@ -162,6 +194,9 @@ export default {
 }
 .active {
   bottom: 0 !important;
+}
+.blur {
+  filter: blur(0.625rem);
 }
 .actor {
   display: flex;
