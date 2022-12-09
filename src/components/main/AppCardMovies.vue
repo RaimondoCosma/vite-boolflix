@@ -76,8 +76,8 @@ export default {
           }
         )
         .then((resp) => {
-          if (resp.data.results[0]) {
-            this.store.movieTrailers = resp.data.results[0].key;
+          if (resp.data.results) {
+            this.store.movieTrailers = resp.data.results;
           }
         });
     },

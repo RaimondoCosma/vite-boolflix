@@ -31,15 +31,23 @@ export default {
     :class="{ active: this.store.previewVisible }"
     @click="trailerDisable"
   >
-    <iframe
-      v-if="active === true"
-      width="560"
-      height="315"
-      :src="`https://www.youtube.com/embed/${this.store.movieTrailers}`"
-      title="YouTube video player"
-      frameborder="0"
-      allowfullscreen
-    ></iframe>
+    <div
+      class="no-trailer"
+      style="color: white"
+      v-if="this.store.movieTrailers.length === 0 && active === true"
+    >
+      <h2>Non sono presenti trailer per questo titolo</h2>
+    </div>
+    <div v-else class="trailer-container">
+      <iframe
+        v-if="active === true"
+        v-for="trailer in this.store.movieTrailers"
+        :src="`https://www.youtube.com/embed/${trailer.key}`"
+        title="YouTube video player"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </div>
     <div class="container-film" :class="{ blur: active }">
       <!-- Immagine di copertina con tasto play -->
       <div class="preview">
@@ -53,6 +61,10 @@ export default {
         <a @click.stop="trailerActive"
           ><i class="fa-regular fa-circle-play"></i
         ></a>
+        <h2>
+          Sono disponibili {{ this.store.movieTrailers.length }} video da
+          visionare
+        </h2>
       </div>
       <!-- /Immagine di copertina con tasto play -->
       <!-- Dettagli sulla destra dell'immagine -->
@@ -118,12 +130,24 @@ export default {
   background-color: #1b1b1b;
   z-index: 300;
   transition: bottom 0.5s ease-out;
-  iframe {
+  .trailer-container,
+  .no-trailer {
+    display: flex;
+    align-items: center;
+    max-width: 56.25rem;
+    overflow-x: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 400;
+    iframe {
+      width: 35rem;
+      height: 19.6875rem;
+      flex-shrink: 0;
+      border: 0.0625rem solid white;
+      z-index: 400;
+    }
   }
   .container-film {
     display: flex;
@@ -151,6 +175,16 @@ export default {
         color: red;
         font-size: 3.125rem;
       }
+    }
+    h2 {
+      background-color: #1b1b1b73;
+      color: white;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      bottom: 0;
+      text-align: center;
+      padding: 0.125rem 0;
     }
   }
   .all-detail {
